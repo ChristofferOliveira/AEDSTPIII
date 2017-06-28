@@ -2,46 +2,50 @@
 
 int main(int argc, char *argv[]){
 
-	char *dic, *pad;
-	
-	FILE *arqTex = fopen(argv[1], "r"), *arqPad = fopen(argv[2], "r");
-	
-	if(arqTex == NULL || arqPad == NULL){
+    int tamanhoTexto, tamanhoPadrao, opcao;
+    char *dicionario, *padrao;
+
+	FILE *arqTex, *arqPadrao;
+
+	*arqTex = fopen(argv[1], "r");
+    *arqPadrao = fopen(argv[2], "r");
+
+	if(arqTex == NULL || arqPadrao == NULL){
 		printf("Algum dos arquivos está vazio.\n");
 	}else{
-		
-		fseek(arqTex, 0, SEEK_END);
-		int inSizeTex = ftell(arqTex)+1;
-		rewind(arqTex);
-		dic = malloc(inSizeTex);
-		fread(dic, 1, inSizeTex, arqTex);
-		
-		printf("dic = %s\n", dic);
-		
-		fseek(arqPad, 0, SEEK_END);
-		int inSizePad = ftell(arqPad)+1;
-		rewind(arqPad);
-		pad = malloc(inSizePad);
-		fread(pad, 1, inSizePad, arqPad);
-		
-		printf("pad = %s\n", pad);
+
+		dicionario = lerArquivo(arqTex, dicionario);
+		printf("dicionario = %s\n", dicionario);
+
+        padrao = lerArquivo(arqPadrao, padrao);
+        printf("padrao = %s\n", padrao);
 	}
 	fclose(arqTex);
-	fclose(arqPad);
-	
-	int m = strlen(dic), n = strlen(pad), oper;/*m tamanho do texto, n tamanho do padrão*/
-	while(1){
+	fclose(arqPadrao);
+
+	tamanhoTexto = strlen(dicionario);
+	tamanhoPadrao = strlen(padrao);/*m tamanho do texto, n tamanho do padraorão*/
+
+	while(opcao != 3){
 		printf("1.Força bruta\n2.Heurística\n3.Sair\n");
-		scanf("%d", &oper);
-		
-		if(oper == 1){
-			forcabruta(dic, pad, m, n);
-		}else if(oper == 2){
-			BMH(dic, pad, m, n);
-		}else if(oper == 3){
-			return 0;
-		}
+		scanf("%d", &opcao);
+        switch(opcao){
+         case 1:
+            forcaBruta(dicionario, padrao, tamanhoTexto, tamanhoPadrao);
+            break;
+         case 2:
+            BMH(dicionario, padrao, tamanhoTexto, tamanhoPadrao);
+            break;
+         case 3:
+            break;
+         default:
+            printf("Comando Incorreto");
+            break;
+        }
 	}
-	free(dic);
-	free(pad);
+
+	free(dicionario);
+	free(padrao);
+
+	return 0;
 }
