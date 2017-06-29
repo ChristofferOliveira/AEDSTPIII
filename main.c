@@ -26,8 +26,8 @@ int main(int argc, char *argv[]){
 	fclose(arqTex);
 	fclose(arqPadrao);
 
-	tamanhoTexto = strlen(dicionario);
-	tamanhoPadrao = strlen(padrao);/*m tamanho do texto, n tamanho do padraorão*/
+	tamanhoTexto = strlen(dicionario) - 1;
+	tamanhoPadrao = strlen(padrao) - 1;/*m tamanho do texto, n tamanho do padraorão*/
 
 	while(opcao != 3){
 		printf("1.Força bruta\n2.Heurística\n3.Sair\n");
