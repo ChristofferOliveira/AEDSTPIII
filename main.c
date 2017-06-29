@@ -1,4 +1,6 @@
-#include"BMH.h"
+#include "BMH.h"
+#include "Utils.h"
+#include "Forcabruta.h"
 
 int main(int argc, char *argv[]){
 
@@ -7,17 +9,18 @@ int main(int argc, char *argv[]){
 
 	FILE *arqTex, *arqPadrao;
 
-	*arqTex = fopen(argv[1], "r");
-    *arqPadrao = fopen(argv[2], "r");
+	arqTex = fopen(argv[1], "r");
+    arqPadrao = fopen(argv[2], "r");
 
 	if(arqTex == NULL || arqPadrao == NULL){
 		printf("Algum dos arquivos está vazio.\n");
+        return 0;
 	}else{
 
-		dicionario = lerArquivo(arqTex, dicionario);
+		dicionario = lerArquivo(arqTex);
 		printf("dicionario = %s\n", dicionario);
 
-        padrao = lerArquivo(arqPadrao, padrao);
+        padrao = lerArquivo(arqPadrao);
         printf("padrao = %s\n", padrao);
 	}
 	fclose(arqTex);

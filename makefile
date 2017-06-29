@@ -1,14 +1,10 @@
-#MAKEFILE#
-all: tp3
-tp3: main.o forcabruta.o BMH.o 
-	gcc -o tp3 main.o forcabruta.o BMH.o
-main.o: main.c forcabruta.h BMH.h
-	gcc -o main.o -c main.c
+all: Forcabruta.o BMH.o Utils.o
+	gcc Forcabruta.o BMH.o Utils.o main.c -o main.exe
+	./main.exe texto.txt padrao.txt
+Forcabruta.o: Forcabruta.c Forcabruta.h
+	gcc -c Forcabruta.c -o Forcabruta.o
 BMH.o: BMH.c BMH.h
-	gcc -o BMH.o -c BMH.c
-forcabruta.o: forcabruta.c forcabruta.h
-	gcc -o forcabruta.o -c forcabruta.c
-clean:
-	rm -rf *.o
-mrproper: clean
-	rm -rf tp3
+	gcc -c BMH.c -o BMH.o
+Utils.o: Utils.c Utils.h
+	gcc -c Utils.c -o Utils.o
+clar: rm *.o

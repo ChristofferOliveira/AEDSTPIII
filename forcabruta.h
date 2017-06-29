@@ -1,5 +1,5 @@
 #ifndef FORCABRUTA_H
-#def FORCABRUTA_H
+#define FORCABRUTA_H
 
 #include<stdio.h>
 #include<stdlib.h>

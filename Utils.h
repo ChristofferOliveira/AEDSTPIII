@@ -1,10 +1,10 @@
 #ifndef UTILS_H
-#def UTILS_H
+#define UTILS_H
 
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
 
-String lerArquivo(FILE *arquivo, char *conteudo);
+char * lerArquivo(FILE *arquivo);
 
 #endif // UTILS_H
