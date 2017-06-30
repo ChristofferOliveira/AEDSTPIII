@@ -18,7 +18,6 @@ void BMH(char *dic, char *pad, int m, int n){
 	while(j <= m){
 		k = j;/*Indice de início de comparação no texto(note que ele se inicia com o valor correspondente ao tamanho do padrão)*/
 		i = n;/*Indice de comparação do padrão*/
-
 		while(dic[k-1] == pad[i-1] && i > 0){/*Enquanto o caracter de posição k-1 do texto for igual ao caracter de posição i-1 do padrão e i for menor que o tamanho do padrão, quer dizer que está ocorrendo casamento*/
 			k--;/*Nesse caso a comparação é feita da direita para a esquerda*/
 			i--;
@@ -44,18 +43,13 @@ void *thread_BMH(void *arg){
 	}
 
 	for(i = 0; i < tamanhoPadrao; i++){
-		tabelad[(int)padrao[i]] = (tamanhoPadrao-i);
+		tabelad[(int)padrao[i]] = tamanhoPadrao - i;
 	}
 
     fimThread = argumento->thread_inicio + argumento->thread_tamanho;
 
-/**DEBUG**/printf("Thread %d -- Inicio: %d - fim - %d\n", argumento->id, argumento->thread_inicio, fimThread);
-            getchar();
-
-	for(j = tamanhoPadrao; j <= fimThread; j += tabelad[(int)dicionario[j]]){
-		k = argumento->thread_inicio + j;
-/**DEBUG**/printf("Thread %d iniciando a partir de %d(inicio + padrao = %d)\n", argumento->id, k - 1, j);
-            getchar();
+	for(j = argumento->thread_inicio + tamanhoPadrao; j <= fimThread; j += tabelad[(int)dicionario[j]]){
+		k = j;
 		i = tamanhoPadrao;
 
 		while(dicionario[k-1] == padrao[i-1] && i > 0){

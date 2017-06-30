@@ -53,17 +53,13 @@ void BMHPthread(){
 
         if(i > 0){
             restoThread = argumentos[i - 1].thread_tamanho % tamanhoPadrao;
- /**DEBUG**/printf("Resto da Thread: %d\n", restoThread);
             argumentos[i].thread_inicio -= restoThread;
             argumentos[i].thread_tamanho += restoThread;
-/**DEBUg**/printf("Thread: %d -- Inicio: %d - Tamanho: %d\n", argumentos[i].id, argumentos[i].thread_inicio, argumentos[i].thread_tamanho);
 
             if(argumentos[i].thread_inicio != argumentos[i - 1].thread_tamanho){
                     if(verificarFinalThread(dicionario[argumentos[i].thread_inicio], dicionario[argumentos[i - 1].thread_tamanho])){
-            /**DEEBUG**/printf("2Padrao está entre duas Threads.\n");
                             argumentos[i].thread_inicio = argumentos[i].thread_inicio - tamanhoPadrao;
                             argumentos[i].thread_tamanho = argumentos[i].thread_tamanho + tamanhoPadrao;
-            /**DEBUg**/printf("2Thread: %d -- Inicio: %d - Tamanho: %d\n", argumentos[i].id, argumentos[i].thread_inicio, argumentos[i].thread_tamanho);
                     }
             }
         }
