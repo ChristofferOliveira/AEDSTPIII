@@ -1,5 +1,5 @@
 #ifndef PTHREAD_H
-#define PTREAD_H
+#define PTREAD_H//Chris isso aqui não deveria ser #define PTHREAD_H
 
 #include <pthread.h>
 
