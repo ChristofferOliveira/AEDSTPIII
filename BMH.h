@@ -8,4 +8,6 @@
 
 void BMH(char *dicionario, char *padrao, int tamanhoTexto, int tamanhoPadrao);
 
+void *thread_BMH(void *arg);
+
 #endif // BMH_H

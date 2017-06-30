@@ -34,8 +34,8 @@ int main(int argc, char *argv[]){
 	tamanhoTexto = strlen(dicionario) - 1;
 	tamanhoPadrao = strlen(padrao) - 1;
 
-	while(opcao != 5){
-		printf("1.Força bruta(Sequencial)\n2.BMH(Sequencial)\n3.Força bruta(pthreads)\n4.Força bruta(openmp)\n5.Sair\n");
+	while(opcao != 6){
+		printf("1.Força bruta(Sequencial)\n2.BMH(Sequencial)\n3.Força bruta(pthreads)\n4.Força bruta(openmp)\n5.BMH(openmp)\n6.Sair\n");
 		scanf("%d", &opcao);
         switch(opcao){
          case 1:
@@ -51,6 +51,9 @@ int main(int argc, char *argv[]){
 
             break;
          case 5:
+            BMHPthread();
+            break;
+         case 6:
 
             break;
          default:

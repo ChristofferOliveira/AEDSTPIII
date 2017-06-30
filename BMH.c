@@ -1,4 +1,6 @@
-#include"BMH.h"
+#include "BMH.h"
+#include "Utils.h"
+#include "pthread.h"
 
 void BMH(char *dic, char *pad, int m, int n){
 	int i, j, k, cas = 0, tabelad[256];/*Vocabulário*/
@@ -30,4 +32,43 @@ void BMH(char *dic, char *pad, int m, int n){
 		j += tabelad[(int)dic[j]];
 	}
 	printf("Número de casamentos: %d\n", cas);
+}
+
+void *thread_BMH(void *arg){
+    ptr_Pthread argumento = (ptr_Pthread)arg;
+
+    int i, j, k, cas = 0, fimThread = 0,tabelad[256];
+
+	for(i = 0; i < 256; i++){
+		tabelad[i] = tamanhoPadrao;
+	}
+
+	for(i = 0; i < tamanhoPadrao; i++){
+		tabelad[(int)padrao[i]] = (tamanhoPadrao-i);
+	}
+
+    fimThread = argumento->thread_inicio + argumento->thread_tamanho;
+
+/**DEBUG**/printf("Thread %d -- Inicio: %d - fim - %d\n", argumento->id, argumento->thread_inicio, fimThread);
+            getchar();
+
+	for(j = tamanhoPadrao; j <= fimThread; j += tabelad[(int)dicionario[j]]){
+		k = argumento->thread_inicio + j;
+/**DEBUG**/printf("Thread %d iniciando a partir de %d(inicio + padrao = %d)\n", argumento->id, k - 1, j);
+            getchar();
+		i = tamanhoPadrao;
+
+		while(dicionario[k-1] == padrao[i-1] && i > 0){
+			k--;
+			i--;
+		}
+
+		if(i == 0){
+			pthread_mutex_lock(&mutex);
+            numeroCasamento = numeroCasamento + 1;
+            pthread_mutex_unlock(&mutex);
+			printf("Casamento na(s) posição(ões): %d com thread %d\n", k, argumento->id);
+		}
+	}
+
 }

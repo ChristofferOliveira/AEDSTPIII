@@ -11,4 +11,6 @@ typedef struct pthread{
 
 void forcaBrutaPthread();
 
+void BMHPthread();
+
 #endif // PTHREAD_H
