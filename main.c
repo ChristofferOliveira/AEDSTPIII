@@ -53,7 +53,7 @@ int main(int argc, char *argv[]){
 
             break;
          default:
-            printf("Comando Incorreto");
+            printf("Comando Incorreto\n");
             break;
         }
 	}
