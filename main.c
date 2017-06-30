@@ -30,10 +30,11 @@ int main(int argc, char *argv[]){
 	fclose(arqTex);
 	fclose(arqPadrao);
 
+    numeroCasamento = 0;
 	tamanhoTexto = strlen(dicionario) - 1;
 	tamanhoPadrao = strlen(padrao) - 1;
 
-	while(opcao != 3){
+	while(opcao != 5){
 		printf("1.Força bruta(Sequencial)\n2.BMH(Sequencial)\n3.Força bruta(pthreads)\n4.Força bruta(openmp)\n5.Sair\n");
 		scanf("%d", &opcao);
         switch(opcao){

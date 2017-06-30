@@ -23,14 +23,14 @@ void forcaBruta(char *dic, char *pad, int m, int n){
 }
 
 void *thread_forcaBruta(void *arg){
-    pthread_mutex_t mutex;
     ptr_Pthread argumento = (ptr_Pthread)arg;
 
-    int i, j, k, cas = 0, fimThread;
+    int i, j, k, teste = 0,cas = 0, fimThread = 0;
 
     fimThread = argumento->thread_inicio + argumento->thread_tamanho;
 
     for(i = argumento->thread_inicio; i <= fimThread; i++){
+
         k = i;
         j = 0;
 
@@ -40,8 +40,11 @@ void *thread_forcaBruta(void *arg){
         }
 
         if(j == tamanhoPadrao){
-            cas++;
-            printf("Sou a thread: %d\nNumero de casamentos: %d\n", argumento->id, cas);
+            pthread_mutex_lock(&mutex);
+            numeroCasamento = numeroCasamento + 1;
+            pthread_mutex_unlock(&mutex);
+            printf("Casamento na(s) posição(ões): %d com thread %d\n", i, argumento->id);
         }
+        teste++;
     }
 }

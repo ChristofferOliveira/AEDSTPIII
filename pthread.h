@@ -1,7 +1,9 @@
 #ifndef PTHREAD_H
-#define PTREAD_H
+#define PTHREAD_H
 
 #include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 typedef struct pthread{
     int thread_inicio, thread_tamanho, id;

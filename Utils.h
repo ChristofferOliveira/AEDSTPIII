@@ -10,6 +10,8 @@ char *padrao;
 int tamanhoTexto;
 int tamanhoPadrao;
 int numerothreads;
+int numeroCasamento;
+pthread_mutex_t mutex;
 
 char * lerArquivo(FILE *arquivo);
 int verificarFinalThread(char letraFinal, char letraInicio);

@@ -1,5 +1,5 @@
 all: Forcabruta.o BMH.o Utils.o pthread.o
-	gcc Forcabruta.o BMH.o Utils.o pthread.o main.c -o main.exe
+	gcc Forcabruta.o BMH.o Utils.o pthread.o main.c -o main.exe -D_REENTRANT -lpthread
 	./main.exe 2 texto.txt padrao.txt
 Forcabruta.o: Forcabruta.c Forcabruta.h
 	gcc -c Forcabruta.c -o Forcabruta.o
