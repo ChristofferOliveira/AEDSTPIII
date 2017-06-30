@@ -1,4 +1,6 @@
 #include "Forcabruta.h"
+#include "pthread.h"
+#include "Utils.h"
 
 void forcaBruta(char *dic, char *pad, int m, int n){
 	int i, j, k, cas = 0;
@@ -18,4 +20,28 @@ void forcaBruta(char *dic, char *pad, int m, int n){
 		}
 	}
 	printf("Número de casamentos: %d\n", cas);
+}
+
+void *thread_forcaBruta(void *arg){
+    pthread_mutex_t mutex;
+    ptr_Pthread argumento = (ptr_Pthread)arg;
+
+    int i, j, k, cas = 0, fimThread;
+
+    fimThread = argumento->thread_inicio + argumento->thread_tamanho;
+
+    for(i = argumento->thread_inicio; i <= fimThread; i++){
+        k = i;
+        j = 0;
+
+        while(dicionario[k] == padrao[j] && j < tamanhoPadrao){
+            k++;
+            j++;
+        }
+
+        if(j == tamanhoPadrao){
+            cas++;
+            printf("Sou a thread: %d\nNumero de casamentos: %d\n", argumento->id, cas);
+        }
+    }
 }
