@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "Forcabruta.h"
 #include "pthread.h"
+#include "openmp.h"
 
 int main(int argc, char *argv[]){
     if(argc < 4){//Condição para verificar se o arquivo foi passado como argumeto antes de excutar o programa
@@ -35,27 +36,51 @@ int main(int argc, char *argv[]){
 	tamanhoPadrao = strlen(padrao) - 1;
 
 	while(opcao != 6){
-		printf("1.Força bruta(Sequencial)\n2.BMH(Sequencial)\n3.Força bruta(pthreads)\n4.Força bruta(openmp)\n5.BMH(openmp)\n6.Sair\n");
+		printf("1.Força bruta(Sequencial)\n2.BMH(Sequencial)\n3.Força bruta(pthreads)\n4.Força bruta(openmp)\n5.BMH(pthreads)\n6.BMH(openmp)\n7.Sair\n");
 		scanf("%d", &opcao);
         switch(opcao){
          case 1:
-            forcaBruta(dicionario, padrao, tamanhoTexto, tamanhoPadrao);
+         	clock_gettime(CLOCK_MONOTONIC, &start);
+            forcaBruta(dicionario, padrao, tamanhoPadrao, 0, tamanhoTexto);
+            clock_gettime(CLOCK_MONOTONIC, &finish);
+
+			elapsed = (finish.tv_sec - start.tv_sec);
+			elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+
+			printf("Tempo de execução em segundos: %lf\n",elapsed );
+            printf("Número de casamentos: %d\n", numeroCasamento);
+            numeroCasamento = 0;
             break;
          case 2:
-            BMH(dicionario, padrao, tamanhoTexto, tamanhoPadrao);
+         	clock_gettime(CLOCK_MONOTONIC, &start);
+            BMH(dicionario, padrao, tamanhoPadrao, 0, tamanhoTexto);
+            printf("Número de casamentos: %d\n", numeroCasamento);
+            clock_gettime(CLOCK_MONOTONIC, &finish);
+
+			elapsed = (finish.tv_sec - start.tv_sec);
+			elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+
+			printf("Tempo de execução em segundos: %lf\n",elapsed );
+            numeroCasamento = 0;
             break;
          case 3:
             forcaBrutaPthread();
+            numeroCasamento = 0;
             break;
          case 4:
-
+			forcaBrutaOPM();
+			numeroCasamento = 0;         	
             break;
          case 5:
             BMHPthread();
+            numeroCasamento = 0;
             break;
          case 6:
-
+         	BMHOPM();
+         	numeroCasamento = 0;
             break;
+         case 7:
+         	break;
          default:
             printf("Comando Incorreto\n");
             break;

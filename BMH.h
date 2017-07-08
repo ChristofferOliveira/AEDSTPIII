@@ -6,7 +6,7 @@
 #include<stdlib.h>
 #include<string.h>
 
-void BMH(char *dicionario, char *padrao, int tamanhoTexto, int tamanhoPadrao);
+void BMH(char *dicionario, char *padrao, int tamanhoPadrao, int inicio, int tamanhoTexto);
 
 void *thread_BMH(void *arg);
 

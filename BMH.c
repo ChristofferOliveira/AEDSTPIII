@@ -2,7 +2,7 @@
 #include "Utils.h"
 #include "pthread.h"
 
-void BMH(char *dic, char *pad, int m, int n){
+void BMH(char *dic, char *pad, int n, int inicio, int m){
 	int i, j, k, cas = 0, tabelad[256];/*Vocabulário*/
 
 	for(i = 0; i < 256; i++){
@@ -13,9 +13,10 @@ void BMH(char *dic, char *pad, int m, int n){
 		tabelad[(int)pad[i]] = n-i;/*Posição no vocabulário onde os caracteres do padrão se encontram*/
 	}
 
-	j = n;
+	j = inicio + n;
 
 	while(j <= m){
+		printf("%d texto %d\n", j, m);
 		k = j;/*Indice de início de comparação no texto(note que ele se inicia com o valor correspondente ao tamanho do padrão)*/
 		i = n;/*Indice de comparação do padrão*/
 		while(dic[k-1] == pad[i-1] && i > 0){/*Enquanto o caracter de posição k-1 do texto for igual ao caracter de posição i-1 do padrão e i for menor que o tamanho do padrão, quer dizer que está ocorrendo casamento*/
@@ -24,13 +25,15 @@ void BMH(char *dic, char *pad, int m, int n){
 		}
 
 		if(i == 0){/*Quando i é igual a zero, isso significa que o último caracter verificado do texto é igual ao primeiro caracter verificado do padrão, logo ocorreu um casamento*/
-			cas++;
+			#pragma omp critical
+			{
+			numeroCasamento++;
+			}
 			printf("Casamento na(s) posição(ões): %d\n", k);
 		}
 
 		j += tabelad[(int)dic[j]];
 	}
-	printf("Número de casamentos: %d\n", cas);
 }
 
 void *thread_BMH(void *arg){

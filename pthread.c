@@ -1,7 +1,4 @@
 #include "pthread.h"
-#include "Utils.h"
-#include "Forcabruta.h"
-#include "BMH.h"
 
 void forcaBrutaPthread(){
     int i, tamanhoThread, resto;
@@ -27,12 +24,22 @@ void forcaBrutaPthread(){
         if(i == (numerothreads - 1)){
             argumentos[i].thread_tamanho += resto;
         }
-
+        
+        clock_gettime(CLOCK_MONOTONIC, &start);
+		
         pthread_create(&(threads[i]), NULL, thread_forcaBruta, &(argumentos[i]));
     }
     for(i = 0; i < numerothreads; i++){
         pthread_join(threads[i], NULL);
     }
+    
+    clock_gettime(CLOCK_MONOTONIC, &finish);
+
+	elapsed = (finish.tv_sec - start.tv_sec);
+	elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+
+	printf("Tempo de execução em segundos: %lf\n",elapsed );
+    
     printf("\nNumero de Casamentos: %d\n\n", numeroCasamento);
 }
 
@@ -66,11 +73,21 @@ void BMHPthread(){
         if(i == (numerothreads - 1)){
             argumentos[i].thread_tamanho += resto;
         }
+        
+        clock_gettime(CLOCK_MONOTONIC, &start);
 
         pthread_create(&(threads[i]), NULL, thread_BMH, &(argumentos[i]));
     }
     for(i = 0; i < numerothreads; i++){
         pthread_join(threads[i], NULL);
     }
+    
+    clock_gettime(CLOCK_MONOTONIC, &finish);
+
+	elapsed = (finish.tv_sec - start.tv_sec);
+	elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+
+	printf("Tempo de execução em segundos: %lf\n",elapsed );
+    
     printf("\nNumero de Casamentos: %d\n\n", numeroCasamento);
 }
