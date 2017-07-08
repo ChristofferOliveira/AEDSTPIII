@@ -59,9 +59,6 @@ void BMHPthread(){
         argumentos[i].thread_inicio = i * tamanhoThread;
 
         if(i > 0){
-            restoThread = argumentos[i - 1].thread_tamanho % tamanhoPadrao;
-            argumentos[i].thread_inicio -= restoThread;
-            argumentos[i].thread_tamanho += restoThread;
 
             if(argumentos[i].thread_inicio != argumentos[i - 1].thread_tamanho){
                     if(verificarFinalThread(dicionario[argumentos[i].thread_inicio], dicionario[argumentos[i - 1].thread_tamanho])){
