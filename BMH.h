@@ -2,9 +2,10 @@
 #ifndef BMH_H
 #define BMH_H
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include "Utils.h"
+#include "pthread.h"
+
+int ord(char c);
 
 void BMH(char *dicionario, char *padrao, int tamanhoPadrao, int inicio, int tamanhoTexto);
 

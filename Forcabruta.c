@@ -15,7 +15,7 @@ void forcaBruta(char *dic, char *pad, int n, int inicio, int m){
 		if(j == n){/*Quando j é igual ao tamanho do padrão, isso significa que o último caracter verificado do texto é diferente do último caracter verificado do padrão*/
 			#pragma omp critical
 			{
-			numeroCasamento++;
+                numeroCasamento++;
 			}
 			printf("Casamento na(s) posição(ões): %d\n", i);
 		}
@@ -25,7 +25,7 @@ void forcaBruta(char *dic, char *pad, int n, int inicio, int m){
 void *thread_forcaBruta(void *arg){
     ptr_Pthread argumento = (ptr_Pthread)arg;
 
-    int i, j, k, teste = 0,cas = 0, fimThread = 0;
+    int i, j, k, fimThread = 0;
 
     fimThread = argumento->thread_inicio + argumento->thread_tamanho;
 
@@ -45,6 +45,5 @@ void *thread_forcaBruta(void *arg){
             pthread_mutex_unlock(&mutex);
             printf("Casamento na(s) posição(ões): %d com thread %d\n", i, argumento->id);
         }
-        teste++;
     }
 }

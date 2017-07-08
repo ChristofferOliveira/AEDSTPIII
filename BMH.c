@@ -1,6 +1,4 @@
 #include "BMH.h"
-#include "Utils.h"
-#include "pthread.h"
 
 void BMH(char *dic, char *pad, int n, int inicio, int m){
 	int i, j, k, cas = 0, tabelad[256];/*Vocabulário*/
@@ -16,7 +14,6 @@ void BMH(char *dic, char *pad, int n, int inicio, int m){
 	j = inicio + n;
 
 	while(j <= m){
-		printf("%d texto %d\n", j, m);
 		k = j;/*Indice de início de comparação no texto(note que ele se inicia com o valor correspondente ao tamanho do padrão)*/
 		i = n;/*Indice de comparação do padrão*/
 		while(dic[k-1] == pad[i-1] && i > 0){/*Enquanto o caracter de posição k-1 do texto for igual ao caracter de posição i-1 do padrão e i for menor que o tamanho do padrão, quer dizer que está ocorrendo casamento*/
@@ -27,12 +24,17 @@ void BMH(char *dic, char *pad, int n, int inicio, int m){
 		if(i == 0){/*Quando i é igual a zero, isso significa que o último caracter verificado do texto é igual ao primeiro caracter verificado do padrão, logo ocorreu um casamento*/
 			#pragma omp critical
 			{
-			numeroCasamento++;
+                numeroCasamento++;
 			}
 			printf("Casamento na(s) posição(ões): %d\n", k);
 		}
 
-		j += tabelad[(int)dic[j]];
+		//Tratando caracteres que não esteja na tabela ascIII das letras.
+        if(tabelad[(int)dicionario[j]] > tamanhoPadrao){
+            j += tamanhoPadrao;
+        }else{
+            j += tabelad[(int)dicionario[j]];
+        }
 	}
 }
 
@@ -51,7 +53,9 @@ void *thread_BMH(void *arg){
 
     fimThread = argumento->thread_inicio + argumento->thread_tamanho;
 
-	for(j = argumento->thread_inicio + tamanhoPadrao; j <= fimThread; j += tabelad[(int)dicionario[j]]){
+    j = argumento->thread_inicio + tamanhoPadrao;
+
+	while(j <= fimThread){
 		k = j;
 		i = tamanhoPadrao;
 
@@ -66,6 +70,12 @@ void *thread_BMH(void *arg){
             pthread_mutex_unlock(&mutex);
 			printf("Casamento na(s) posição(ões): %d com thread %d\n", k, argumento->id);
 		}
+		//Tratando caracteres que não esteja na tabela ascIII das letras.
+        if(tabelad[(int)dicionario[j]] > tamanhoPadrao){
+            j += tamanhoPadrao;
+        }else{
+            j += tabelad[(int)dicionario[j]];
+        }
 	}
 
 }

@@ -1,11 +1,9 @@
 #include "Forcabruta.h"
-#include "pthread.h"
-#include "Utils.h"
 
-void forcaBruta(char *dic, char *pad, int m, int n){
-	int i, j, k, cas = 0;
+void forcaBruta(char *dic, char *pad, int n, int inicio, int m){
+	int i, j, k;
 
-	for(i = 0; i <= m-n; i++){/*Até a última posição possível para uma comparação do padrão*/
+	for(i = inicio; i <= m-n; i++){/*Até a última posição possível para uma comparação do padrão*/
 		k = i;/*Indice de início da comparação no texto*/
 		j = 0;/*Indice de comparação do padrão*/
 
@@ -15,17 +13,19 @@ void forcaBruta(char *dic, char *pad, int m, int n){
 		}
 
 		if(j == n){/*Quando j é igual ao tamanho do padrão, isso significa que o último caracter verificado do texto é diferente do último caracter verificado do padrão*/
-			cas++;
+			#pragma omp critical
+			{
+                numeroCasamento++;
+			}
 			printf("Casamento na(s) posição(ões): %d\n", i);
 		}
 	}
-	printf("Número de casamentos: %d\n", cas);
 }
 
 void *thread_forcaBruta(void *arg){
     ptr_Pthread argumento = (ptr_Pthread)arg;
 
-    int i, j, k, teste = 0,cas = 0, fimThread = 0;
+    int i, j, k, fimThread = 0;
 
     fimThread = argumento->thread_inicio + argumento->thread_tamanho;
 
@@ -34,7 +34,7 @@ void *thread_forcaBruta(void *arg){
         k = i;
         j = 0;
 
-        while(dicionario[k] == padrao[j] && j < tamanhoPadrao){
+        while(dicionario[k] == padrao[j] && j < tamanhoPadrao && k <= fimThread){
             k++;
             j++;
         }
@@ -45,6 +45,5 @@ void *thread_forcaBruta(void *arg){
             pthread_mutex_unlock(&mutex);
             printf("Casamento na(s) posição(ões): %d com thread %d\n", i, argumento->id);
         }
-        teste++;
     }
 }
