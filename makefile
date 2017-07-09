@@ -1,6 +1,5 @@
 all: Forcabruta.o BMH.o Utils.o pthread.o openmp.o
 	gcc Forcabruta.o BMH.o Utils.o pthread.o openmp.o main.c -o main.exe -D_REENTRANT -lpthread -fopenmp
-	./main.exe 8 texto.txt padrao.txt
 Forcabruta.o: Forcabruta.c Forcabruta.h
 	gcc -c Forcabruta.c -o Forcabruta.o
 BMH.o: BMH.c BMH.h

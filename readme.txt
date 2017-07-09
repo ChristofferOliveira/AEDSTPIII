@@ -1,6 +1,8 @@
-Para limpar os arquivos executáveis e os .o insira o seguinte comando:
-make mrproper
-Para compilar o arquivo, faça uso dos seguintes comandos no GCC:
-make
-Após a compilação, basta executar o programa:
-./tp3 texto.txt padrao.txt
+﻿Trabalho prático 1 - Algoritmo e Estrutura de Dados III
+
+Autores: Christoffer de Paula Oliveira; Davi Luiz Gusmão Maciel
+
+Compilação: make
+
+Execução: ./main.exe numeroThreads ArquivoTexto ArquivoPadrao
+Siga o Menu para selecionar entre os algoritmos.
