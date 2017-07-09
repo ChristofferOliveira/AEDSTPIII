@@ -10,8 +10,10 @@ typedef struct pthread{
     int thread_inicio, thread_tamanho, id;
 }Pthread, *ptr_Pthread;
 
+//Força bruta utilizando pthreads
 void forcaBrutaPthread();
 
+//BMH utilizando pthreads.
 void BMHPthread();
 
 #endif // PTHREAD_H

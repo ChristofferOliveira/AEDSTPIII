@@ -5,7 +5,7 @@
 #include "openmp.h"
 
 int main(int argc, char *argv[]){
-    if(argc < 4){//Condição para verificar se o arquivo foi passado como argumeto antes de excutar o programa
+    if(argc < 4){       //Condição para verificar se o arquivo foi passado como argumeto antes de excutar o programa
         printf("Falha ao executar(falta de argumento)\n");
         return 0;
     }
@@ -35,34 +35,36 @@ int main(int argc, char *argv[]){
 	tamanhoTexto = strlen(dicionario) - 1;
 	tamanhoPadrao = strlen(padrao) - 1;
 
-	printf("Tamanho do texto: %d Tamanho do padrão: %d\n", tamanhoTexto, tamanhoPadrao);
-
 	while(opcao != 7){
 		printf("1.Força bruta(Sequencial)\n2.BMH(Sequencial)\n3.Força bruta(pthreads)\n4.Força bruta(openmp)\n5.BMH(pthreads)\n6.BMH(openmp)\n7.Sair\n");
 		scanf("%d", &opcao);
         switch(opcao){
          case 1:
          	clock_gettime(CLOCK_MONOTONIC, &start);
-            forcaBruta(dicionario, padrao, tamanhoPadrao, 0, tamanhoTexto);
-            clock_gettime(CLOCK_MONOTONIC, &finish);
 
+            forcaBruta(dicionario, padrao, tamanhoPadrao, 0, tamanhoTexto);
+
+            clock_gettime(CLOCK_MONOTONIC, &finish);
 			elapsed = (finish.tv_sec - start.tv_sec);
 			elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
 
 			printf("Tempo de execução em segundos: %lf\n",elapsed );
             printf("Número de casamentos: %d\n", numeroCasamento);
+
             numeroCasamento = 0;
             break;
          case 2:
          	clock_gettime(CLOCK_MONOTONIC, &start);
-            BMH(dicionario, padrao, tamanhoPadrao, 0, tamanhoTexto);
-            printf("Número de casamentos: %d\n", numeroCasamento);
-            clock_gettime(CLOCK_MONOTONIC, &finish);
 
-			elapsed = (finish.tv_sec - start.tv_sec);
+            BMH(dicionario, padrao, tamanhoPadrao, 0, tamanhoTexto);
+
+            clock_gettime(CLOCK_MONOTONIC, &finish);
+            elapsed = (finish.tv_sec - start.tv_sec);
 			elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
 
+            printf("Número de casamentos: %d\n", numeroCasamento);
 			printf("Tempo de execução em segundos: %lf\n",elapsed );
+
             numeroCasamento = 0;
             break;
          case 3:

@@ -11,6 +11,7 @@
 struct timespec start, finish;
 double elapsed;
 
+//Variáveis globais
 char *dicionario;
 char *padrao;
 int tamanhoTexto;
@@ -20,6 +21,8 @@ int numeroCasamento;
 pthread_mutex_t mutex;
 
 char * lerArquivo(FILE *arquivo);
+
+//Verifica se as duas letras equivalem a alguma letra do padrão.
 int verificarFinalThread(char letraFinal, char letraInicio);
 
 #endif // UTILS_H

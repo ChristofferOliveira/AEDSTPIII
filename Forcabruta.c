@@ -3,16 +3,20 @@
 void forcaBruta(char *dic, char *pad, int n, int inicio, int m){
 	int i, j, k;
 
-	for(i = inicio; i <= m-n; i++){/*Até a última posição possível para uma comparação do padrão*/
-		k = i;/*Indice de início da comparação no texto*/
-		j = 0;/*Indice de comparação do padrão*/
+	for(i = inicio; i <= m-n; i++){     //Até a última posição possível para uma comparação do padrão
+		k = i;      //Indice de início da comparação no texto
+		j = 0;      //Indice de comparação do padrão
 
-		while(dic[k] == pad[j] && j < n){/*Enquanto o caracter de posição k do texto for igual ao caracter de posição j do padrão e j for menor que o tamanho do padrão, quer dizer que está ocorrendo casamento*/
-			k++;/*Comparação é feita sequencialmente*/
+		/*Enquanto o caracter de posição k do texto for igual ao caracter de posição j do padrão
+		 e j for menor que o tamanho do padrão, quer dizer que está ocorrendo casamento*/
+		while(dic[k] == pad[j] && j < n){
+			k++;    //Comparação é feita sequencialmente*/
 			j++;
 		}
 
-		if(j == n){/*Quando j é igual ao tamanho do padrão, isso significa que o último caracter verificado do texto é diferente do último caracter verificado do padrão*/
+        /*Quando j é igual ao tamanho do padrão, isso significa que o último caracter verificado
+        do texto é diferente do último caracter verificado do padrão*/
+		if(j == n){
 			#pragma omp critical
 			{
                 numeroCasamento++;
@@ -34,12 +38,13 @@ void *thread_forcaBruta(void *arg){
         k = i;
         j = 0;
 
+        //Fazendo casamentos para verificar se há ocorrência.
         while(dicionario[k] == padrao[j] && j < tamanhoPadrao && k <= fimThread){
             k++;
             j++;
         }
 
-        if(j == tamanhoPadrao){
+        if(j == tamanhoPadrao){     //Se houve casamento
             pthread_mutex_lock(&mutex);
             numeroCasamento = numeroCasamento + 1;
             pthread_mutex_unlock(&mutex);
