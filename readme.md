@@ -2,7 +2,7 @@
 ## Matéria
 - Algoritimo e Estruturas de Dados III
 
-## Autore
+## Autores
 - Christoffer de Paula Oliveira
 - Davi Luiz Gusmão Maciel
 
